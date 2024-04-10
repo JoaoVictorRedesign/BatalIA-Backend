@@ -2,7 +2,9 @@ const { BedrockRuntimeClient, InvokeModelCommand } = require("@aws-sdk/client-be
 const readFileText = require("./ReadFileText")
 
 class AWSModel{
-    async ModelAWS(input, modelID, topicIndex){
+    async ModelClaude(input, modelID, topicIndex){
+
+      
 
         const config = {
           region: "us-east-1",
@@ -32,6 +34,7 @@ class AWSModel{
             "contentType": "application/json",
             "body": JSON.stringify(str)
         };
+
         
         const client = new BedrockRuntimeClient(config);
         
@@ -42,10 +45,73 @@ class AWSModel{
          
         const result = JSON.parse(texto)
         
-        return result.content[0]
+        return result.content[0].text
         
-        }
-        
+    }
+    async ModelMistral(input, modelID, topicIndex){
+
+      const config = {
+        region: "us-east-1",
+        credentials: {
+          accessKeyId: "AKIA3X544P6C44TQJRE5",
+          secretAccessKey: "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",
+        },
+
+      };
+      const inputMistral = {
+        "modelId":"mistral.mixtral-8x7b-instruct-v0:1",
+        "contentType": "application/json",
+        "accept": "application/json",
+        "body": JSON.stringify({
+          "prompt": input,
+          "max_tokens": 1300
+      })
+    }
+      
+      const client = new BedrockRuntimeClient(config);
+      
+      const command = new InvokeModelCommand(inputMistral);
+      const response = await client.send(command);
+      const decoder = new TextDecoder('utf-8');
+      const texto = decoder.decode(response.body);
+       
+      const result = JSON.parse(texto)
+
+      return result.outputs[0].text
+    }
+
+    async modelTitan(input, modelId, topicIndex){
+      const config = {
+        region: "us-east-1",
+        credentials: {
+          accessKeyId: "AKIA3X544P6C44TQJRE5",
+          secretAccessKey: "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",
+        },
+
+      };
+      const inputTitan = {
+        "modelId":"amazon.titan-text-express-v1",
+        "contentType": "application/json",
+        "accept": "application/json",
+        "body": JSON.stringify({
+          "inputText": input,
+      })
+    }
+      
+      const client = new BedrockRuntimeClient(config);
+      
+      const command = new InvokeModelCommand(inputTitan);
+      const response = await client.send(command);
+      
+      const decoder = new TextDecoder('utf-8');
+      const texto = decoder.decode(response.body);
+      
+      const result = JSON.parse(texto)
+
+      // console.log('result titan:', result.results[0].outputText);
+
+      return result.results[0].outputText
+    }
 }
 
 module.exports = AWSModel

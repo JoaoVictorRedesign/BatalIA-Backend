@@ -55,7 +55,7 @@ class RequestPrompt{
         
         async function Request() {                 
             let data = JSON.stringify({
-                "input": await readFileText(topicIndex) +  input,
+                "input": /* await readFileText(topicIndex) +  */ input,
                 "parameters": {
                     "decoding_method": "greedy",
                     "max_new_tokens": 1500,
