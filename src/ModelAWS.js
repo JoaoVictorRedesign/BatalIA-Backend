@@ -23,7 +23,7 @@ class AWSModel{
               "content": [
                 {
                   "type": "text",
-                  "text": /* await readFileText(topicIndex)  + */ input
+                  "text": await readFileText(topicIndex)  + input
                 }
               ]
             }
@@ -63,7 +63,7 @@ class AWSModel{
         "contentType": "application/json",
         "accept": "application/json",
         "body": JSON.stringify({
-          "prompt": input,
+          "prompt": await readFileText(topicIndex) +  input,
           "max_tokens": 1300
       })
     }

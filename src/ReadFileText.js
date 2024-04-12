@@ -10,7 +10,7 @@ async function readFileText(topicIndex) {
         path = "./src/assets/futebol_text.txt"
     }
     else if(topicIndex == 3){
-        path = "./assets/f1_text.txt"
+        path = "./src/assets/alimentacao.txt"
     }
     
     const text = fs.readFileSync(path)

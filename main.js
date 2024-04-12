@@ -18,7 +18,8 @@ app.post('/request-prompt', async (req, res) => {
       const requestPrompt = new RequestPrompt;
       const response = await requestPrompt.GetResponse(prompt, model, topic)
       res.status(200)
-      res.send({text: model + " " +response})
+      res.send({text: response})
+      console.log("Modelo IBM finalizado")
 
     }
     else if(platform == "aws"){
@@ -40,7 +41,9 @@ app.post('/request-prompt', async (req, res) => {
       }
     
       res.status(200)
-      res.send({text: model + " " +response})
+      res.send({text: response})
+      console.log("Modelo AWS finalizado")
+
     }
 })
 
@@ -52,7 +55,9 @@ app.post("/request-model2", async (req, res) =>{
     const requestPrompt = new RequestPrompt;
     const response = await requestPrompt.GetResponse(prompt, model, topic)
     res.status(200)
-    res.send({text: model + " " +response})
+    res.send({text: response})
+    console.log("Modelo IBM finalizado")
+
 
   }
   else if(platform == "aws"){
@@ -74,7 +79,9 @@ app.post("/request-model2", async (req, res) =>{
     }
   
     res.status(200)
-    res.send({text: model + " " +response})
+    res.send({text: response})
+    console.log("Modelo AWS finalizado")
+
   }
 
 })
